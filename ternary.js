@@ -5,19 +5,33 @@
 hierarchy: text < decimal < ternary < notes
 TODO:
 think about how many of the converters actually make sense
-buttons which generate and execute examples
+actually think of some good examples
 */
 
 var inputElement, outputElement, fromElement, toElement;
 
 window.onload = function() {
-    // DOM variables
+    // create DOM variables and event handlers
     inputElement  = document.querySelector("#inputElement");
     outputElement = document.querySelector("#outputElement");
     fromElement   = document.querySelector("#from");
     toElement     = document.querySelector("#to");
     
     document.querySelector("button").onclick = process;
+    
+    let exampleButtons = document.querySelectorAll("#examples a");
+    
+    let examples = [
+        ["text", "ternary", "I am the walrus."],
+        ["text", "ternary", "I am the second walrus."],
+        ["text", "ternary", "I am the third walrus."],
+    ];
+    
+    for (let i in examples) {
+        exampleButtons[i].onclick = function() {
+            runExample(...examples[i]);
+        }
+    }
 }
 
 var noteMap = new Map([
@@ -102,6 +116,13 @@ function process() {
     
     outputElement.innerHTML = output;
     console.log("Successfully converted.");
+}
+
+function runExample(from, to, input) {
+    fromElement.value  = from;
+    toElement.value    = to;
+    inputElement.value = input;
+    process();
 }
 
 // let hello = "Hello!";
