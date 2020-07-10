@@ -21,15 +21,10 @@ window.onload = function() {
     
     let exampleButtons = document.querySelectorAll("#examples a");
     
-    let examples = [
-        ["text", "ternary", "I am the walrus."],
-        ["text", "ternary", "I am the second walrus."],
-        ["text", "ternary", "I am the third walrus."],
-    ];
-    
-    for (let i in examples) {
-        exampleButtons[i].onclick = function() {
-            runExample(...examples[i]);
+    for (let button of exampleButtons) {
+        let data = button.dataset;
+        button.onclick = function() {
+            runExample(data.from, data.to, data.input);
         }
     }
 }
