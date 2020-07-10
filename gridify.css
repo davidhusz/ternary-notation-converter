@@ -1,0 +1,23 @@
+body {
+    display: grid;
+    grid-template: 20px 75px 150px 1fr 20px / 1fr 500px 200px 1fr;
+    /* have a look at `min-content`, `max-content` and `fit-content` */
+    grid-template-areas:
+        ". .      .        ."
+        ". header .        ."
+        ". form   examples ."
+        ". output .        ."
+        ". .      .        ."
+}
+h1 {
+    grid-area: header;
+}
+#examples {
+    grid-area: examples;
+}
+form {
+    grid-area: form;
+}
+#outputElement {
+    grid-area: output;
+}
