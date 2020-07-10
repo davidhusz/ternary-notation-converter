@@ -4,8 +4,10 @@
 /*
 hierarchy: text < decimal < ternary < notes
 TODO:
+some sort of explanation about how this works at a high level
 think about how many of the converters actually make sense
 actually think of some good examples
+add readme
 */
 
 var inputElement, outputElement, fromElement, toElement;
@@ -46,7 +48,7 @@ var ternaryToDecimal = {
 }
 
 var textToDecimal = {
-    extract:  text => text.match(/[A-Za-z]/g),
+    extract: text => text.match(/[A-Za-z]/g),
     translate: char => (char.toUpperCase().charCodeAt(0) - 64)
 }
 
@@ -57,7 +59,9 @@ var decimalToText = {
 
 var textToTernary = {
     extract: textToDecimal.extract,
-    translate: char => decimalToTernary.translate(textToDecimal.translate(char)).padStart(3, "0")
+    translate: char => decimalToTernary
+                      .translate(textToDecimal.translate(char))
+                      .padStart(3, "0")
 }
 
 var ternaryToText = {
@@ -78,26 +82,27 @@ var notesToTernary = {
         return noteGroups;
     },
     translate: noteGroup => noteGroup
-                            .split(" ")
-                            .map(note => noteMap.get(note.toLowerCase()))
-                            .join("")
+                           .split(" ")
+                           .map(note => noteMap.get(note.toLowerCase()))
+                           .join("")
 }
 
 var notesToDecimal = {
     extract: notesToTernary.extract,
-    translate: noteGroup => ternaryToDecimal.translate(notesToTernary.translate(noteGroup))
+    translate: noteGroup => ternaryToDecimal
+                           .translate(notesToTernary.translate(noteGroup))
 }
 
 var notesToText = {
     extract: notesToTernary.extract,
-    translate: noteGroup => decimalToText.translate(notesToDecimal.translate(noteGroup))
+    translate: noteGroup => decimalToText
+                           .translate(notesToDecimal.translate(noteGroup))
 }
 
 var handleSelfConversion = {
     extract: text => text.split(""),
     translate: x => x
 }
-
 
 function process() {
     let input     = inputElement.value;
